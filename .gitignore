@@ -1,1 +1,3 @@
 consumer/.terraform
+consumer/terraform.tfstate
+consumer/terraform.tfstate.backup
