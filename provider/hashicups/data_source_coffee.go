@@ -64,13 +64,11 @@ func dataSourceCoffees() *schema.Resource {
 	}
 }
 
-func dataSourceCoffeesRead(
-	ctx context.Context,
-	d *schema.ResourceData,
-	m interface{},
-) diag.Diagnostics {
+func dataSourceCoffeesRead(ctx context.Context, d *schema.ResourceData, m interface{}) diag.Diagnostics {
 	client := &http.Client{Timeout: 10 * time.Second}
-	var diag diag.Diagnostics
+
+	// Warning or errors can be collected in a slice type
+	var diags diag.Diagnostics
 
 	req, err := http.NewRequest("GET", fmt.Sprintf("%s/coffees", "http://localhost:19090"), nil)
 	if err != nil {
@@ -81,6 +79,7 @@ func dataSourceCoffeesRead(
 	if err != nil {
 		return diag.FromErr(err)
 	}
+	defer r.Body.Close()
 
 	coffees := make([]map[string]interface{}, 0)
 	err = json.NewDecoder(r.Body).Decode(&coffees)
@@ -92,7 +91,8 @@ func dataSourceCoffeesRead(
 		return diag.FromErr(err)
 	}
 
+	// always run
 	d.SetId(strconv.FormatInt(time.Now().Unix(), 10))
 
-	return diag
+	return diags
 }

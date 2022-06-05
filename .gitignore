@@ -1,3 +1,4 @@
 consumer/.terraform
 consumer/terraform.tfstate
 consumer/terraform.tfstate.backup
+consumer/reads/.terraform/
