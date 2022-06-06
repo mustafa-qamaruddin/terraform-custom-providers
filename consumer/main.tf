@@ -39,7 +39,7 @@ data "hashicups_ingredients" "first_coffee" {
 }
 
 output "edu_order" {
-    value = resource.hashicups_order.edu2
+    value = hashicups_order.edu2
 }
 
 output "first_coffee_ingredients" {
