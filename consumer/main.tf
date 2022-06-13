@@ -33,7 +33,6 @@ resource "hashicups_order" "edu2" {
     }
 }
 
-
 data "hashicups_ingredients" "first_coffee" {
     coffee_id = hashicups_order.edu2.items[0].coffee[0].id
 }

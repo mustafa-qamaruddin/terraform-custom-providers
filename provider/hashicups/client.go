@@ -198,3 +198,17 @@ func (c *Client) SignOut(authToken *string) error {
 
 	return nil
 }
+
+func (c *Client) GetOrder(orderId string) (*Order, error) {
+	req, err := http.NewRequest("GET", fmt.Sprintf("%s/orders/%s", c.HostURL, orderId), strings.NewReader(""))
+	if err != nil {
+		return nil, err
+	}
+	body, err := c.doRequest(req, &c.Token)
+	if err != nil {
+		return nil, err
+	}
+	order := &Order{}
+	err = json.Unmarshal(body, order)
+	return order, err
+}
